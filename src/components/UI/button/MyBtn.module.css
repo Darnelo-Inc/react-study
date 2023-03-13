@@ -1,0 +1,25 @@
+.myBtn {
+  display: inline-block;
+  margin-bottom: 10px;
+  padding: 5px 20px;
+
+  font-size: 14px;
+  color: teal;
+
+  background: transparent;
+  border: 1px solid teal;
+  border-radius: 8px;
+  cursor: pointer;
+
+  transition: color 0.1s linear, background 0.1s linear;
+}
+
+.myBtn:last-child {
+  margin-bottom: 0;
+}
+
+.myBtn:hover {
+  color: white;
+
+  background-color: teal;
+}
