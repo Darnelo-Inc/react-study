@@ -1,27 +1,24 @@
 import axios from "axios"
 
-class PostService {
+export default class PostService {
   static async getAll(limit, page) {
-    const response = await axios.get(
-      "https://jsonplaceholder.typicode.com/posts",
-      { params: { _limit: limit, _page: page } }
-    )
-    return response
+    const res = await axios.get("https://jsonplaceholder.typicode.com/posts", {
+      params: { _limit: limit, _page: page },
+    })
+    return res
   }
 
   static async getPost(id) {
-    const response = await axios.get(
-      `https://jsonplaceholder.typicode.com/posts/${id}`
+    const res = await axios.get(
+      "https://jsonplaceholder.typicode.com/posts/" + id
     )
-    return response
+    return res
   }
 
   static async getComments(id) {
-    const response = axios.get(
-      `https://jsonplaceholder.typicode.com/posts/${id}/comments`
+    const res = await axios.get(
+      "https://jsonplaceholder.typicode.com/posts/" + id + "/comments"
     )
-    return response
+    return res
   }
 }
-
-export default PostService

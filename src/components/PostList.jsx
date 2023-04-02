@@ -1,31 +1,23 @@
-import React from "react"
-import PostItem from "./PostItem"
-import { TransitionGroup, CSSTransition } from "react-transition-group"
+import React, { } from 'react'
+import PostItem from './PostItem'
+import styles from "../styles/PostList.module.css"
+import "../styles/vendor.css"
+import { CSSTransition, TransitionGroup } from 'react-transition-group'
 
-function PostList({ title, posts, setPosts, allPosts }) {
+const PostList = ({ searchPosts, deletePost }) => {
 
-  const delPost = (id) => {
-    setPosts(allPosts.filter((elem) => elem.id !== id))
-  }
+  if (!searchPosts.length) return <h2 className={`center ${styles.post__list}`}>There are no posts</h2>
 
-  return posts.length ? (
-    <>
-      <h1 style={{ textAlign: "center" }}>{title}</h1>
-
-      <TransitionGroup>
-        {posts.map((elem) =>
-          <CSSTransition
-            key={elem.id}
-            timeout={500}
-            classNames="post"
-          >
-            <PostItem id={elem.id} key={elem.id} post={elem} delPost={delPost} />
-          </CSSTransition>)}
-      </TransitionGroup>
-    </>
-  ) : (
-    <h1 style={{ textAlign: "center" }}>There are no posts</h1>
-  )
+  return <div className={styles.post__list}>
+    <h2 className="center">Posts</h2>
+    <TransitionGroup>
+      {searchPosts.map((post) =>
+        <CSSTransition key={post.id} classNames="post" timeout={500}>
+          <PostItem {...post} deletePost={deletePost} />
+        </CSSTransition>
+      )}
+    </TransitionGroup>
+  </div>
 }
 
 export default PostList

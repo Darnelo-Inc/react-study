@@ -1,26 +1,29 @@
-import React from "react";
-import MyBtn from "../components/UI/button/MyBtn";
-import MyInput from "../components/UI/input/MyInput";
-import { AuthContext } from "../context/context";
+import { useContext } from 'react'
+import MyInput from '../components/UI/MyInput'
+import styles from "../styles/Login.module.css"
+import MyBtn from '../components/UI/MyBtn'
+import { AuthContext } from '../context/context'
 
-function Login() {
-    const { setIsAuth } = React.useContext(AuthContext)
+const Login = () => {
+    const { setIsAuth } = useContext(AuthContext)
 
-    const submit = (e) => {
+    function onSubmit(e) {
         e.preventDefault()
-        setIsAuth(true)
         localStorage.setItem('auth', 'true')
+        setIsAuth(true)
     }
 
-    return <>
-        <h2 className="center">Auth page</h2>
-        <form>
-            <MyInput type="text" placeholder="Type login" />
-            <MyInput type="password" placeholder="Type password" />
+    return (
+        <div className={styles.login}>
+            <h2 className={styles.login__header}>Login</h2>
+            <form onSubmit={onSubmit}>
+                <MyInput type="text" placeholder="Login..." />
+                <MyInput type="password" placeholder="Password..." />
 
-            <MyBtn onClick={submit}>Log in</MyBtn>
-        </form>
-    </>
+                <MyBtn>Log In</MyBtn>
+            </form>
+        </div>
+    )
 }
 
 export default Login

@@ -1,20 +1,19 @@
-import React from "react"
+import { useEffect, useRef } from "react"
 
-const useObserver = (ref, cb, isLoading, canLoad) => {
-  const observer = React.useRef()
+const useObserver = (isLoading, ref, canLoad, cb) => {
+  const obsRef = useRef()
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (isLoading) return
-    if (observer.current) observer.current.disconnect()
+    if (obsRef.current) obsRef.current.disconnect()
 
-    let callback = function (entries, observer) {
-      if (entries[0].isIntersecting && canLoad) {
+    obsRef.current = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting & canLoad) {
         cb()
       }
-    }
+    })
 
-    observer.current = new IntersectionObserver(callback)
-    observer.current.observe(ref.current)
+    obsRef.current.observe(ref.current)
   }, [isLoading]) // eslint-disable-line
 }
 

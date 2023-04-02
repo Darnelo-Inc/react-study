@@ -1,29 +1,25 @@
-import React from "react"
+import { useMemo } from "react"
 
-function useSortedPosts(posts, sort) {
-  const sortedPosts = React.useMemo(() => {
-    if (sort) {
-      if (sort === "id") {
-        return [...posts].sort((a, b) => a.id - b.id)
-      } else {
-        return [...posts].sort((a, b) => a[sort].localeCompare(b[sort]))
-      }
+export function useSortPosts(posts, sort) {
+  const sortPosts = useMemo(() => {
+    if (sort && sort !== "id") {
+      return [...posts].sort((a, b) => a[sort].localeCompare(b[sort]))
     } else {
       return posts
     }
   }, [posts, sort])
 
-  return sortedPosts
+  return sortPosts
 }
 
-function useSearchedPosts(sortedPosts, search) {
-  const searchedPosts = React.useMemo(() => {
-    return sortedPosts.filter((elem) =>
-      elem.title.toLowerCase().includes(search.toLowerCase())
+export function useSearchPosts(sortPosts, search) {
+  const searchPosts = useMemo(() => {
+    return [...sortPosts].filter(
+      (elem) =>
+        elem.title.toLowerCase().includes(search.toLowerCase()) ||
+        elem.body.toLowerCase().includes(search.toLowerCase())
     )
-  }, [sortedPosts, search])
+  }, [sortPosts, search])
 
-  return searchedPosts
+  return searchPosts
 }
-
-export { useSortedPosts, useSearchedPosts }

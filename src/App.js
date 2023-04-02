@@ -1,14 +1,15 @@
-import React from "react"
+import { useEffect, useState } from "react"
 import { BrowserRouter } from "react-router-dom"
-import Nav from "./components/UI/nav/Nav"
+import "./styles/reset.css"
+import MyNav from "./components/UI/MyNav"
 import AppRouter from "./components/AppRouter"
 import { AuthContext } from "./context/context"
 
-function App() {
-  const [isAuth, setIsAuth] = React.useState(false)
-  const [isLoading, setIsLoading] = React.useState(true)
+const App = () => {
+  const [isAuth, setIsAuth] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (localStorage.getItem("auth")) {
       setIsAuth(true)
     }
@@ -16,15 +17,9 @@ function App() {
   }, [])
 
   return (
-    <AuthContext.Provider
-      value={{
-        isAuth,
-        setIsAuth,
-        isLoading,
-      }}
-    >
+    <AuthContext.Provider value={{ isAuth, setIsAuth, isLoading }}>
       <BrowserRouter>
-        <Nav />
+        <MyNav />
         <AppRouter />
       </BrowserRouter>
     </AuthContext.Provider>

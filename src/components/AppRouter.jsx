@@ -1,32 +1,21 @@
-import React from "react"
-import { Routes, Route, Navigate } from "react-router-dom"
+import { Routes, Route } from "react-router-dom"
+import { privateRoutes, publicRoutes } from "../routers/router"
+import { useContext } from "react"
 import { AuthContext } from "../context/context"
-import { privateRoutes, publicRoutes } from "../routes/routes"
-import Loader from "./UI/Loader/Loader"
+import Loader from "./Loader"
 
-function AppRouter() {
-    const { isAuth, isLoading } = React.useContext(AuthContext)
+const AppRouter = () => {
+    const { isAuth, isLoading } = useContext(AuthContext)
 
-    if (isLoading) {
-        return <Loader />
-    }
+    if (isLoading) return <Loader />
 
     return (
-        isAuth
-            ?
-            <Routes>
-                {privateRoutes.map((elem) => <Route key={elem.path} path={elem.path} element={<elem.element />} />)}
-
-                < Route path="/*" element={< Navigate to="/posts" replace />} />
-            </Routes>
-            :
-            <Routes>
-                {publicRoutes.map((elem) => <Route key={elem.path} path={elem.path} element={<elem.element />} />)}
-
-                < Route path="/*" element={< Navigate to="/login" replace />} />
-            </Routes>
+        <Routes>
+            {isAuth
+                ? privateRoutes.map(elem => <Route key={elem.path} {...elem} />)
+                : publicRoutes.map(elem => <Route key={elem.path} {...elem} />)}
+        </Routes>
     )
-
 }
 
 export default AppRouter
