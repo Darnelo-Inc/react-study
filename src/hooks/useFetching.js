@@ -1,20 +1,21 @@
-import { useState } from "react"
+import React from "react"
 
-const useFetching = (cb) => {
-  const [info, setInfo] = useState({ isLoading: false, error: "" })
+function useFetching(callback) {
+  const [isLoading, setIsLoading] = React.useState(false)
+  const [error, setError] = React.useState("")
 
-  async function fetching(...args) {
+  const fetching = async (...args) => {
     try {
-      setInfo((info) => ({ ...info, isLoading: true }))
-      await cb(...args)
+      setIsLoading(true)
+      await callback(...args)
     } catch (e) {
-      setInfo((info) => ({ ...info, error: e.message }))
+      setError(e.message)
     } finally {
-      setInfo((info) => ({ ...info, isLoading: false }))
+      setIsLoading(false)
     }
   }
 
-  return [fetching, info.isLoading, info.error]
+  return [fetching, isLoading, error]
 }
 
 export default useFetching

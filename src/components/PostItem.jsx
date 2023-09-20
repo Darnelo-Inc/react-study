@@ -1,24 +1,24 @@
-import React from 'react'
-import styles from "../styles/PostItem.module.css"
-import MyBtn from './UI/MyBtn'
-import { useNavigate } from 'react-router-dom'
+import React from "react"
+import MyBtn from "./UI/button/MyBtn"
+import styles from "./PostItem.module.css"
+import { useNavigate } from "react-router-dom"
 
-const PostItem = ({ id, title, body, deletePost }) => {
-    const nav = useNavigate()
-
-    return (
-        <div className={styles.post__item}>
-            <div className={styles.post__content}>
-                <span>{id}. </span>
-                <strong>{title}</strong>
-                <p>{body}</p>
-            </div>
-            <div className={styles.post__btn}>
-                <MyBtn onClick={() => nav(`/posts/${id}`)}>Open</MyBtn>
-                <MyBtn onClick={() => deletePost(id)}>Delete</MyBtn>
-            </div>
-        </div>
-    )
+function PostItem(props) {
+  const route = useNavigate()
+  return (
+    <div className="post">
+      <div className="post__content">
+        <strong>
+          {props.id}. {props.post.title}
+        </strong>
+        <div>{props.post.body}</div>
+      </div>
+      <div className={styles.post__btn}>
+        <MyBtn onClick={() => route(`/posts/${props.id}`)}>Open</MyBtn>
+        <MyBtn onClick={() => props.delPost(props.id)}>Delete</MyBtn>
+      </div>
+    </div>
+  )
 }
 
 export default PostItem

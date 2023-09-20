@@ -1,9 +1,5 @@
-import React from 'react'
-
-const About = () => {
-    return (
-        <h2 className="center">About page</h2>
-    )
+function About() {
+    return <h1 className="center">This is About page</h1>
 }
 
 export default About
